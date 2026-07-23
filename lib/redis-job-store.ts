@@ -99,7 +99,7 @@ export class RedisJobStore {
       // Otherwise parse the JSON string
       return JSON.parse(jobData as string);
     } catch (error) {
-      console.error("Error parsing job data:", error);
+      console.error("Internal error parsing job data:", error);
       return null;
     }
   }
