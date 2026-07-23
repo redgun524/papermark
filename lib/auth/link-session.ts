@@ -61,9 +61,11 @@ export async function createLinkSession(
   documentId?: string,
   dataroomId?: string,
   fingerprint?: string,
+  durationMs?: number,
 ): Promise<{ token: string; expiresAt: number }> {
   const sessionToken = crypto.randomBytes(48).toString("base64url");
-  const expiresAt = Date.now() + COOKIE_EXPIRATION_TIME;
+  const duration = durationMs ?? COOKIE_EXPIRATION_TIME;
+  const expiresAt = Date.now() + duration;
   const now = Date.now();
 
   const sessionData: LinkSession = {
@@ -96,7 +98,7 @@ export async function createLinkSession(
     await redis.sadd(`viewer_sessions:${viewerId}`, sessionToken);
     await redis.expire(
       `viewer_sessions:${viewerId}`,
-      Math.floor(COOKIE_EXPIRATION_TIME / 1000),
+      Math.floor(duration / 1000),
     );
   }
 
