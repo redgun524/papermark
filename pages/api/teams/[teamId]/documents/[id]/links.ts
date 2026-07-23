@@ -7,7 +7,7 @@ import { enforceDocumentMemberScope } from "@/lib/api/rbac/guard";
 import { errorhandler } from "@/lib/errorHandler";
 import prisma from "@/lib/prisma";
 import { CustomUser } from "@/lib/types";
-import { decryptEncrpytedPassword, log } from "@/lib/utils";
+import { decryptEncryptedPassword, log } from "@/lib/utils";
 
 export default async function handle(
   req: NextApiRequest,
@@ -149,7 +149,7 @@ export default async function handle(
         // Decrypt the password if it exists
         const decryptedPassword =
           link.password !== null
-            ? decryptEncrpytedPassword(link.password)
+            ? decryptEncryptedPassword(link.password)
             : null;
 
         return {

@@ -38,7 +38,7 @@ import {
 } from "@/lib/signing/agreements";
 import { recordLinkView } from "@/lib/tracking/record-link-view";
 import { CustomUser, WatermarkConfigSchema } from "@/lib/types";
-import { checkPassword, decryptEncrpytedPassword, log } from "@/lib/utils";
+import { checkPassword, decryptEncryptedPassword, log } from "@/lib/utils";
 import { isEmailMatched } from "@/lib/utils/email-domain";
 import { generateOTP } from "@/lib/utils/generate-otp";
 import { LOCALHOST_IP } from "@/lib/utils/geo";
@@ -328,7 +328,7 @@ export async function POST(request: NextRequest) {
         if (!textParts || textParts.length !== 2) {
           isPasswordValid = await checkPassword(password, link.password);
         } else {
-          const decryptedPassword = decryptEncrpytedPassword(link.password);
+          const decryptedPassword = decryptEncryptedPassword(link.password);
           isPasswordValid = decryptedPassword === password;
         }
 

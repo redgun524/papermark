@@ -6,7 +6,7 @@ import { getServerSession } from "next-auth/next";
 import { errorhandler } from "@/lib/errorHandler";
 import prisma from "@/lib/prisma";
 import { CustomUser, LinkWithViews } from "@/lib/types";
-import { decryptEncrpytedPassword, log } from "@/lib/utils";
+import { decryptEncryptedPassword, log } from "@/lib/utils";
 
 export default async function handle(
   req: NextApiRequest,
@@ -95,7 +95,7 @@ export default async function handle(
           extendedLinks.map(async (link) => {
             // Decrypt the password if it exists
             if (link.password !== null) {
-              link.password = decryptEncrpytedPassword(link.password);
+              link.password = decryptEncryptedPassword(link.password);
             }
             // Resolve the upload-folder allow-list when restricted.
             if (link.enableUpload) {

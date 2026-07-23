@@ -12,8 +12,8 @@ import { enforceLinkMemberScope } from "@/lib/api/rbac/guard";
 import prisma from "@/lib/prisma";
 import { CustomUser, WatermarkConfigSchema } from "@/lib/types";
 import {
-  decryptEncrpytedPassword,
-  generateEncrpytedPassword,
+  decryptEncryptedPassword,
+  generateEncryptedPassword,
 } from "@/lib/utils";
 import { checkGlobalBlockList } from "@/lib/utils/global-block-list";
 
@@ -402,7 +402,7 @@ export default async function handle(
 
     const hashedPassword =
       password && password.length > 0
-        ? await generateEncrpytedPassword(password)
+        ? await generateEncryptedPassword(password)
         : null;
     const exat = expiresAt ? new Date(expiresAt) : null;
 
@@ -745,7 +745,7 @@ export default async function handle(
 
     // Decrypt the password for the updated link
     if (updatedLink.password !== null) {
-      updatedLink.password = decryptEncrpytedPassword(updatedLink.password);
+      updatedLink.password = decryptEncryptedPassword(updatedLink.password);
     }
 
     // Echo the resolved folder allow-list so the client can render chips with

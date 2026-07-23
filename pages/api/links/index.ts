@@ -15,8 +15,8 @@ import { errorhandler } from "@/lib/errorHandler";
 import prisma from "@/lib/prisma";
 import { CustomUser, WatermarkConfigSchema } from "@/lib/types";
 import {
-  decryptEncrpytedPassword,
-  generateEncrpytedPassword,
+  decryptEncryptedPassword,
+  generateEncryptedPassword,
 } from "@/lib/utils";
 import { sendLinkCreatedWebhook } from "@/lib/webhook/triggers/link-created";
 
@@ -178,7 +178,7 @@ export default async function handler(
 
       const hashedPassword =
         password && password.length > 0
-          ? await generateEncrpytedPassword(password)
+          ? await generateEncryptedPassword(password)
           : null;
       const exat = expiresAt ? new Date(expiresAt) : null;
 
@@ -493,7 +493,7 @@ export default async function handler(
 
       // Decrypt the password for the new link
       if (linkWithView.password !== null) {
-        linkWithView.password = decryptEncrpytedPassword(linkWithView.password);
+        linkWithView.password = decryptEncryptedPassword(linkWithView.password);
       }
 
       return res.status(200).json(linkWithView);

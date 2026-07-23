@@ -6,7 +6,7 @@ import { enforceDataroomMemberScope } from "@/lib/api/rbac/guard";
 import { errorhandler } from "@/lib/errorHandler";
 import prisma from "@/lib/prisma";
 import { CustomUser, LinkWithViews } from "@/lib/types";
-import { decryptEncrpytedPassword, log } from "@/lib/utils";
+import { decryptEncryptedPassword, log } from "@/lib/utils";
 
 import { authOptions } from "../../../../auth/[...nextauth]";
 
@@ -87,7 +87,7 @@ export default async function handle(
           extendedLinks.map(async (link) => {
             // Decrypt the password if it exists
             if (link.password !== null) {
-              link.password = decryptEncrpytedPassword(link.password);
+              link.password = decryptEncryptedPassword(link.password);
             }
             if (link.enableUpload) {
               const allowedIds = Array.isArray(link.uploadFolderIds)

@@ -14,7 +14,7 @@ import prisma from "@/lib/prisma";
 import { CustomUser } from "@/lib/types";
 import {
   convertDataUrlToBuffer,
-  generateEncrpytedPassword,
+  generateEncryptedPassword,
   isDataUrl,
 } from "@/lib/utils";
 import { sendLinkCreatedWebhook } from "@/lib/webhook/triggers/link-created";
@@ -380,9 +380,9 @@ async function createLinkFromRow({
   metaFavicon: string | null;
 }) {
   const hashedPassword = row.password
-    ? await generateEncrpytedPassword(row.password)
+    ? await generateEncryptedPassword(row.password)
     : preset?.password
-      ? await generateEncrpytedPassword(preset.password)
+      ? await generateEncryptedPassword(preset.password)
       : null;
 
   const expiresAtDate = row.expiresAt

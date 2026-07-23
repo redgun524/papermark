@@ -592,7 +592,7 @@ export const generateGravatarHash = (email: string | null): string => {
   return hash;
 };
 
-export async function generateEncrpytedPassword(
+export async function generateEncryptedPassword(
   password: string,
 ): Promise<string> {
   // If the password is empty, return an empty string
@@ -621,7 +621,7 @@ export async function generateEncrpytedPassword(
   return IV.toString("hex") + ":" + encryptedText;
 }
 
-export function decryptEncrpytedPassword(password: string): string {
+export function decryptEncryptedPassword(password: string): string {
   if (!password) return "";
   const encryptedKey: string = crypto
     .createHash("sha256")

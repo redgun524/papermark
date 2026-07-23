@@ -19,7 +19,7 @@ import prisma from "@/lib/prisma";
 import { ratelimit } from "@/lib/redis";
 import {
   convertDataUrlToBuffer,
-  generateEncrpytedPassword,
+  generateEncryptedPassword,
   isDataUrl,
   safeSlugify,
   uploadImage,
@@ -595,9 +595,9 @@ async function handleDocumentCreate(
 
     // Process fields for link update
     const hashedPassword = link.password
-      ? await generateEncrpytedPassword(link.password)
+      ? await generateEncryptedPassword(link.password)
       : preset?.password
-        ? await generateEncrpytedPassword(preset.password)
+        ? await generateEncryptedPassword(preset.password)
         : null;
 
     const expiresAtDate = link.expiresAt
@@ -996,9 +996,9 @@ async function handleLinkCreate(
   try {
     // Hash password if provided
     const hashedPassword = link.password
-      ? await generateEncrpytedPassword(link.password)
+      ? await generateEncryptedPassword(link.password)
       : preset?.password
-        ? await generateEncrpytedPassword(preset.password)
+        ? await generateEncryptedPassword(preset.password)
         : null;
 
     const expiresAtDate = link.expiresAt
@@ -1234,10 +1234,10 @@ async function handleLinkUpdate(
     // password – hash when provided via link or preset
     if (has("password")) {
       data.password = link.password
-        ? await generateEncrpytedPassword(link.password)
+        ? await generateEncryptedPassword(link.password)
         : null;
     } else if (preset?.password) {
-      data.password = await generateEncrpytedPassword(preset.password);
+      data.password = await generateEncryptedPassword(preset.password);
     }
 
     // domain + slug (validated to always be paired earlier)
@@ -1504,9 +1504,9 @@ async function handleDataroomCreate(
     if (createLink && link) {
       const isGroupAudience = link.audienceType === "GROUP";
       const hashedPassword = link.password
-        ? await generateEncrpytedPassword(link.password)
+        ? await generateEncryptedPassword(link.password)
         : preset?.password
-          ? await generateEncrpytedPassword(preset.password)
+          ? await generateEncryptedPassword(preset.password)
           : null;
       const expiresAtDate = link.expiresAt
         ? new Date(link.expiresAt)

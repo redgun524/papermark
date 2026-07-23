@@ -13,7 +13,7 @@ import {
 import { errorhandler } from "@/lib/errorHandler";
 import prisma from "@/lib/prisma";
 import { CustomUser } from "@/lib/types";
-import { decryptEncrpytedPassword } from "@/lib/utils";
+import { decryptEncryptedPassword } from "@/lib/utils";
 
 /**
  * POST /api/links/:id/transfer
@@ -241,7 +241,7 @@ export default async function handle(
     ).catch(() => {});
 
     if (updatedLink.password !== null) {
-      updatedLink.password = decryptEncrpytedPassword(updatedLink.password);
+      updatedLink.password = decryptEncryptedPassword(updatedLink.password);
     }
 
     const responseLink = {
