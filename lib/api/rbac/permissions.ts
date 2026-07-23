@@ -76,6 +76,17 @@ const DATAROOM_MEMBER_PERMISSIONS: PermissionAction[] = [
   "analytics.read",
 ];
 
+// AUDITOR is a team-wide read-only role: it can read datarooms, the team-wide
+// All Documents list, links, per-item analytics, and team metadata, but holds
+// no write verbs and no team-wide analytics or member management.
+const AUDITOR_PERMISSIONS: PermissionAction[] = [
+  "datarooms.read",
+  "documents.read",
+  "links.read",
+  "analytics.read",
+  "team.read",
+];
+
 /**
  * Returns the set of permission verbs granted to a role. The set is the single
  * source of truth for "what verbs" a role can perform, mirroring Dub's
@@ -95,6 +106,8 @@ export function getPermissionsByRole(
       return new Set(ALL_PERMISSIONS.filter((p) => !MEMBER_DENIED.includes(p)));
     case "DATAROOM_MEMBER":
       return new Set(DATAROOM_MEMBER_PERMISSIONS);
+    case "AUDITOR":
+      return new Set(AUDITOR_PERMISSIONS);
     default:
       // Unknown / future roles are denied everything by default.
       return new Set<PermissionAction>();

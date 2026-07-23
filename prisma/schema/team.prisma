@@ -93,6 +93,9 @@ enum Role {
   // Least-privileged role. Scoped to one or more datarooms via UserDataroom and
   // acts as a room manager inside only those rooms. Denied everywhere else.
   DATAROOM_MEMBER
+  // Team-wide read-only role. Can read datarooms, documents, links, analytics,
+  // and team metadata, but holds no write verbs anywhere.
+  AUDITOR
 }
 
 // Assigns a DATAROOM_MEMBER (or any user) to a specific dataroom within a team.
