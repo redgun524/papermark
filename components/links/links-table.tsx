@@ -17,7 +17,6 @@ import {
   Code2Icon,
   CopyCheckIcon,
   CopyIcon,
-  CopyPlusIcon,
   CrownIcon,
   EyeIcon,
   EyeOffIcon,
@@ -514,52 +513,6 @@ export default function LinksTable({
     const previewLink = `${process.env.NEXT_PUBLIC_MARKETING_URL}/view/${link.id}?previewToken=${previewToken}`;
 
     window.open(previewLink, "_blank");
-  };
-
-  const handleDuplicateLink = async (link: LinkWithViews) => {
-    setIsLoading(true);
-
-    const response = await fetch(`/api/links/${link.id}/duplicate`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        teamId: currentTeamId,
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const duplicatedLink = await response.json();
-    const endpointTargetType = `${targetType.toLowerCase()}s`; // "documents" or "datarooms"
-
-    // Update the duplicated link in the list of links
-    mutate(
-      `/api/teams/${currentTeamId}/${endpointTargetType}/${encodeURIComponent(
-        link.documentId ?? link.dataroomId ?? "",
-      )}/links`,
-      (links || []).concat(duplicatedLink),
-      false,
-    );
-
-    // Update the group-specific links cache if this is a group link
-    if (!!groupId) {
-      const groupLinks =
-        links?.filter((link) => link.groupId === groupId) || [];
-      mutate(
-        `/api/teams/${currentTeamId}/${endpointTargetType}/${encodeURIComponent(
-          duplicatedLink.documentId ?? duplicatedLink.dataroomId ?? "",
-        )}/groups/${duplicatedLink.groupId}/links`,
-        groupLinks.concat(duplicatedLink),
-        false,
-      );
-    }
-
-    toast.success("Link duplicated successfully");
-    setIsLoading(false);
   };
 
   const handleSendInvitations = (link: LinkWithViews) => {
@@ -1077,13 +1030,6 @@ export default function LinksTable({
                                 : "Upgrade to send via email"}
                             </DropdownMenuItem>
                           )}
-                          <DropdownMenuItem
-                            disabled={!canAddLinks}
-                            onClick={() => handleDuplicateLink(link)}
-                          >
-                            <CopyPlusIcon className="mr-2 h-4 w-4" />
-                            Duplicate Link
-                          </DropdownMenuItem>
                           <DropdownMenuItem
                             onClick={() => {
                               setLinkToTransfer(link);
