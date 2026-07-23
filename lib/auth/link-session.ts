@@ -13,7 +13,7 @@ import {
 } from "@/lib/auth/dataroom-auth";
 import { redis } from "@/lib/redis";
 
-const COOKIE_EXPIRATION_TIME = 23 * 60 * 60 * 1000; // 23 hours
+const COOKIE_EXPIRATION_TIME = 12 * 60 * 60 * 1000; // 12 hours
 
 export { getLinkSessionCookieName } from "@/lib/auth/link-session-cookie";
 import { getLinkSessionCookieName } from "@/lib/auth/link-session-cookie";

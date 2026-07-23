@@ -496,7 +496,7 @@ export async function POST(request: NextRequest) {
 
         const otpCode = generateOTP();
         const expiresAt = new Date();
-        expiresAt.setMinutes(expiresAt.getMinutes() + 10); // token expires at 10 minutes
+        expiresAt.setMinutes(expiresAt.getMinutes() + 5); // token expires at 5 minutes
 
         await prisma.verificationToken.create({
           data: {
