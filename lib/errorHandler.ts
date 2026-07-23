@@ -1,5 +1,7 @@
 import { NextApiResponse } from "next";
 
+// Error-handling policy: always sanitize errors before returning them so we never
+// leak stack traces or internal fields to clients; unknown errors fall back to 500.
 function sanitizeError(err: unknown) {
   if (!(err instanceof Error)) {
     return { name: typeof err, message: String(err) };

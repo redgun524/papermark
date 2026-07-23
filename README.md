@@ -93,6 +93,12 @@ npm run dev
 
 Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
+## Self-hosting tips
+
+- Papermark is fully self-hostable. Before exposing it publicly, set `NEXTAUTH_URL`, `NEXT_PUBLIC_BASE_URL`, and `NEXT_PUBLIC_MARKETING_URL` to your own domain.
+- Generate a strong `NEXTAUTH_SECRET` (for example with `openssl rand -base64 32`) and keep your `.env` file out of version control.
+- Point `DATABASE_URL` at your own PostgreSQL instance and re-run `npm run dev:prisma` after pulling schema changes.
+
 ## Tinybird Instructions
 
 To prepare the Tinybird database, follow these steps:
